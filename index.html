@@ -5,8 +5,144 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
+    <main>
+        <div class="calculator">
+            <div><input type="text" id="values" /></div>
+            <div class="allElems">
+                
+                <button onclick="addNum(9)">9</button>
+                <button onclick="addNum(8)">8</button>
+                <button onclick="addNum(7)">7</button>
+                <button onclick="addNum(6)">6</button>
+                <button onclick="addNum(5)">5</button>
+                <button onclick="addNum(4)">4</button>
+                <button onclick="addNum(3)">3</button>
+                <button onclick="addNum(2)">2</button>
+                <button onclick="addNum(1)">1</button>
+                <button onclick="addNum(0)">0</button>
+
+            </div>
+        </div>
+    </main>
+    
+    
+    
+
+
+<script>
+
+
+let symboloperation = "+"
+const pi = 3.14;
+
+
+const addNum = (num) =>{
+    let inputs = document.getElementById("values")
+    console.log(inputs)
+
+    
+    inputs.value += num;
+
+}
+
+
+
+
+
+const operation = (symbol,a,b) =>{
+    switch(symbol){
+        case "+": return(sum(a,b))
+        case "-": return(minus(a,b));
+        case "/": return(divide(a,b));
+        case "*": return(multiply(a,b));
+        case "%": return(percentdivide(a,b))
+    }
+}
+
+
+const sum = (a,b) =>{
+    return a+b;
+}
+const minus = (a,b) =>{
+    return a-b;
+
+}
+const divide =  (a,b) =>{
+    return a/b
+}
+const percentdivide = (a,b) =>{
+    return a%b;
+}
+const multiply = (a,b) =>{
+    return a*b;
+
+} 
+
+
+
+const degree =  ( degrees,  ...args) =>{
+    if(args.length === 1){    return Math.pow(args[0],degrees)}
+    else{
+            return Math.pow(operation(symboloperation, args[0],args[1]), degrees)
+    }
+}   
+
+const root =  ( ...args) =>{
+    if(args.length === 1){    return Math.sqrt(args[0])}
+    else{
+            return Math.sqrt(operation(symboloperation, args[0],args[1]))
+    }
+}   
+
+const rootPow =  ( degrees , ...args) =>{
+    if(args.length === 1){    return Math.pow(args[0],1 / degrees)}
+    else{
+            return Math.pow(operation(symboloperation, args[0],args[1]), 1/degrees)
+    }
+}   
+
+const clear = (element) =>{
+    return element.innerHTML = ''
+}
+
+
+
+
+const sin = (a) =>{
+    return Math.sin(a);
+}
+const cos = (a) =>{
+    return Math.cos(a);
+}
+const tang = (a) =>{
+    return Math.tan(a);
+}
+
+const arcsin = (a) =>{
+    return Math.asin(a);
+}
+const arccos = (a) =>{
+    return Math.acos(a);
+}
+
+const arctang = (a) =>{
+    return Math.atan(a);
+}
+
+const log = (a) =>{
+    return Math.log(a);
+}
+const ln = (a) =>{
+    return Math.log10(a);
+}
+
+const modules = (a) =>{
+    return Math.abs(a);
+}
+    </script>
 </body>
 </html>

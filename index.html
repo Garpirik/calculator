@@ -68,43 +68,80 @@ const cleared = () =>{
 
 
 const solutions = () =>{
-    let inputs = document.getElementById("values")
+//     let inputs = document.getElementById("values")
  
-    let allsymbols =(inputs.value).toString().split('')
-    let i = 0;
-    let f =true;
-    let firstvalue = '';
-    let secondvalue = '';
-    let operatorindex = 0;
-    let operators = ['+','-','/','*']
-    // cleared()
-    do{
-        if( (operators.includes(allsymbols[i]) === false) && f){
-            firstvalue += allsymbols[i];    
-        }
-         if((operators.includes(allsymbols[i]) === true) ){
-            f = false;
-            operatorindex = i;
-            console.log("operator",operatorindex)
-        }
-         if(f === false ){
-            for(let y = operatorindex+1 ;  y < allsymbols.length ; y++ ){
-                secondvalue += allsymbols[y]
-                console.log("yes")
-               i = y + 1;
-            }
-           firstvalue = operation(allsymbols[operatorindex],Number(firstvalue),Number(secondvalue))
-            inputs.value = firstvalue
-                console.log("lol",operation(allsymbols[operatorindex],Number(firstvalue),Number(secondvalue)))
-              
-        }   
+//     let allsymbols =(inputs.value).toString().split('')
+//     let i = 0;
+//     let f =true;
+//     let firstvalue = '';
+//     let secondvalue = '';
+//     let operatorindex = 0;
+//     let operators = ['+','-','/','*']
+//     // cleared()
+//     do{
+//         if( (operators.includes(allsymbols[i]) === false) && f){
+//             firstvalue += allsymbols[i];    
+//         }
+//          if((operators.includes(allsymbols[i]) === true) ){
+//             f = false;
+//             operatorindex = i;
+//             console.log("operator",operatorindex)
+//         }
+//          if(f === false ){
+//             for(let y = operatorindex+1 ;  y < allsymbols.length ; y++ ){
+//                 secondvalue += allsymbols[y]
+//                 console.log("yes")
+//                i = y + 1;
+//             }
+//            firstvalue = operation(allsymbols[operatorindex],Number(firstvalue),Number(secondvalue))
+//             inputs.value = firstvalue
+//                 console.log("lol",operation(allsymbols[operatorindex],Number(firstvalue),Number(secondvalue)))
+//               break;
+//         }   
 
 
-        i++;
-    }while((i <= allsymbols.length ))
-    console.log("first" ,firstvalue)
-    console.log("second", secondvalue)
-    // console.log(i)
+//         i++;
+//     }while((i <= allsymbols.length ))
+//     console.log("first" ,firstvalue)
+//     console.log("second", secondvalue)
+//     // console.log(i)
+// }
+
+
+let inputs = document.getElementById("values");
+    let allsymbols = (inputs.value).toString().split('');
+    let operators = ['+', '-', '/', '*'];
+    let numbers = [];
+    let operations = [];
+    let currentNumber = '';
+
+    // Разбираем строку на операнды и операторы
+    for (let i = 0; i < allsymbols.length; i++) {
+        if (operators.includes(allsymbols[i])) {
+            // Когда находим оператор, сохраняем текущий операнд и сам оператор
+            numbers.push(Number(currentNumber));
+            operations.push(allsymbols[i]);
+            currentNumber = ''; // Очищаем для следующего числа
+        } else {
+            // Если это часть числа, добавляем его к currentNumber
+            currentNumber += allsymbols[i];
+        }
+    }
+
+    // Добавляем последнее число
+    if (currentNumber !== '') {
+        numbers.push(Number(currentNumber));
+    }
+
+    // Выполняем все операции последовательно
+    let result = numbers[0]; // Начинаем с первого числа
+
+    for (let i = 0; i < operations.length; i++) {
+        result = operation(operations[i], result, numbers[i + 1]);
+    }
+
+    inputs.value = result; // Обновляем поле ввода с результатом
+    console.log("Result", result);
 }
 
 

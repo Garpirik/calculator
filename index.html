@@ -13,17 +13,25 @@
         <div class="calculator">
             <div><input type="text" id="values" /></div>
             <div class="allElems">
-                
-                <button onclick="addNum(9)">9</button>
-                <button onclick="addNum(8)">8</button>
-                <button onclick="addNum(7)">7</button>
-                <button onclick="addNum(6)">6</button>
-                <button onclick="addNum(5)">5</button>
-                <button onclick="addNum(4)">4</button>
-                <button onclick="addNum(3)">3</button>
-                <button onclick="addNum(2)">2</button>
-                <button onclick="addNum(1)">1</button>
-                <button onclick="addNum(0)">0</button>
+                <button onclick="addValue('+')">+</button>
+                <button onclick="addValue('-')">-</button>
+                <button onclick="addValue('/')">/</button>
+                <button onclick="addValue('*')">*</button>
+                <button onclick="solutions()">=</button>
+                <button onclick="cleared()">C</button>
+                <button onclick="addValue('^')">x^n</button>
+                <button onclick="addValue('√')">√x</button>
+                <button onclick="addValue('%')">%</button>
+                <button onclick="addValue(9)">9</button>
+                <button onclick="addValue(8)">8</button>
+                <button onclick="addValue(7)">7</button>
+                <button onclick="addValue(6)">6</button>
+                <button onclick="addValue(5)">5</button>
+                <button onclick="addValue(4)">4</button>
+                <button onclick="addValue(3)">3</button>
+                <button onclick="addValue(2)">2</button>
+                <button onclick="addValue(1)">1</button>
+                <button onclick="addValue(0)">0</button>
 
             </div>
         </div>
@@ -40,13 +48,63 @@ let symboloperation = "+"
 const pi = 3.14;
 
 
-const addNum = (num) =>{
+const addValue = (values) =>{
     let inputs = document.getElementById("values")
     console.log(inputs)
 
     
-    inputs.value += num;
+    inputs.value += values;
 
+}
+
+
+
+const cleared = () =>{
+    let inputs = document.getElementById("values")
+
+     inputs.value = '';
+ 
+}
+
+
+const solutions = () =>{
+    let inputs = document.getElementById("values")
+ 
+    let allsymbols =(inputs.value).toString().split('')
+    let i = 0;
+    let f =true;
+    let firstvalue = '';
+    let secondvalue = '';
+    let operatorindex = 0;
+    let operators = ['+','-','/','*']
+    // cleared()
+    do{
+        if( (operators.includes(allsymbols[i]) === false) && f){
+            firstvalue += allsymbols[i];    
+        }
+         if((operators.includes(allsymbols[i]) === true) ){
+            f = false;
+            operatorindex = i;
+            console.log("operator",operatorindex)
+        }
+         if(f === false ){
+            for(let y = operatorindex+1 ;  y < allsymbols.length ; y++ ){
+                secondvalue += allsymbols[y]
+                console.log("yes")
+               i = y + 1;
+            }
+           firstvalue = operation(allsymbols[operatorindex],Number(firstvalue),Number(secondvalue))
+            inputs.value = firstvalue
+                console.log("lol",operation(allsymbols[operatorindex],Number(firstvalue),Number(secondvalue)))
+              
+        }   
+
+
+        i++;
+    }while((i <= allsymbols.length ))
+    console.log("first" ,firstvalue)
+    console.log("second", secondvalue)
+    // console.log(i)
 }
 
 
@@ -105,9 +163,7 @@ const rootPow =  ( degrees , ...args) =>{
     }
 }   
 
-const clear = (element) =>{
-    return element.innerHTML = ''
-}
+
 
 
 

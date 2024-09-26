@@ -10,8 +10,10 @@
 <body>
     
     <main>
+        <h1 style="text-align: center;">Калькулятор</h1>
         <div class="calculator">
-            <div><input type="text" id="values" /></div>
+            
+            <div><input type="text" id="values"  readonly/></div>
             <div class="allElems">
                 <button onclick="addValue('+')">+</button>
                 <button onclick="addValue('-')">-</button>
@@ -35,6 +37,48 @@
 
             </div>
         </div>
+
+
+        <h1 style="text-align: center;">Інженерний Калькулятор</h1>
+        <div class="calculator">
+            
+            <div><input type="text" id="valued"  /></div>
+            <div class="allElems">
+                <button onclick="addValueEnginering('+')">+</button>
+                <button onclick="addValueEnginering('-')">-</button>
+                <button onclick="addValueEnginering('/')">/</button>
+                <button onclick="addValueEnginering('*')">*</button>
+                <button onclick="solutionsEnginering()">=</button>
+                <button onclick="clearedEnginering()">C</button>
+                <button onclick="addValueEnginering('^')">x^n</button>
+                <button onclick="addValueEnginering('√')">√x</button>
+                <button onclick="addValueEnginering('%')">%</button>
+                <button onclick="addValueEnginering(9)">9</button>
+                <button onclick="addValueEnginering(8)">8</button>
+                <button onclick="addValueEnginering(7)">7</button>
+                <button onclick="addValueEnginering(6)">6</button>
+                <button onclick="addValueEnginering(5)">5</button>
+                <button onclick="addValueEnginering(4)">4</button>
+                <button onclick="addValueEnginering(3)">3</button>
+                <button onclick="addValueEnginering(2)">2</button>
+                <button onclick="addValueEnginering(1)">1</button>
+                <button onclick="addValueEnginering(0)">0</button>
+                <button onclick="addValueEnginering('log(')">Log</button>
+                <button onclick="addValueEnginering('ln10(')">Ln10</button>
+                <button onclick="addValueEnginering('mod(')">mod</button>
+                <button onclick="addValueEnginering('sin(')">sin</button>
+                <button onclick="addValueEnginering('cos(')">cos</button>
+                <button onclick="addValueEnginering('tang(')">tang</button>
+                <button onclick="addValueEnginering('arcsin(')">arcsin</button>
+                <button onclick="addValueEnginering('arccos(')">arccos</button>
+                <button onclick="addValueEnginering('arctang(')">arctang</button>
+                <button onclick="addValueEnginering(')')">)</button>
+         
+
+            </div>
+        </div>
+
+
     </main>
     
     
@@ -56,6 +100,8 @@ const addValue = (values) =>{
     inputs.value += values;
 
 }
+
+
 
 
 
@@ -127,6 +173,97 @@ let inputs = document.getElementById("values");
     console.log("Result", result);
 }
 
+
+
+const solutionsEnginering = () =>{
+
+
+
+let inputs = document.getElementById("valued");
+    let allsymbols = (inputs.value).toString().split('');
+    let operators = ['+', '-', '/', '*', "%", '^', '√'];
+    let trygonometry = ['log','ln10','mod','sin','cos', 'tang' ,'arcsin', 'arccos', 'arctang']
+    let numbers = [];
+    let operations = [];
+    let currentNumber = '';
+
+    for (let i = 0; i < allsymbols.length; i++) {
+       
+        
+        if(allsymbols[i] === '√'){
+            currentNumber += root(allsymbols[i+1 ])
+            numbers.push(Number(currentNumber));
+            currentNumber = '';
+            i++;
+            
+        }
+        if(trygonometry.includes(allsymbols[i])){
+                i++;
+                while(allsymbols[i] !== ')'){
+                    currentNumber += allsymbols[i]
+
+                }
+                currentNumber = '' //make in switch
+            }
+
+
+        if (operators.includes(allsymbols[i])) {
+            numbers.push(Number(currentNumber));
+            operations.push(allsymbols[i]);
+            currentNumber = ''; 
+        
+        } 
+        
+
+
+
+        else {
+
+            currentNumber += allsymbols[i];
+        }
+        
+
+
+    
+    }
+
+    
+
+    if (currentNumber !== '') {
+        numbers.push(Number(currentNumber));
+    }
+
+    let result = numbers[0]; 
+
+
+
+    for (let i = 0; i < operations.length; i++) {
+        result = operation(operations[i], result, numbers[i + 1]);
+    }
+
+    inputs.value = result; 
+    console.log("Result", result);
+}
+
+
+const addValueEnginering = (values) =>{
+    let inputs = document.getElementById("valued")
+    console.log(inputs)
+
+    
+    inputs.value += values;
+
+}
+
+
+
+
+const clearedEnginering = () =>{
+    let inputs = document.getElementById("valued")
+
+     inputs.value = '';
+ 
+}
 
 
 

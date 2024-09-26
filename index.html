@@ -13,7 +13,7 @@
         <h1 style="text-align: center;">Калькулятор</h1>
         <div class="calculator">
             
-            <div><input type="text" id="values"  readonly/></div>
+            <div><input type="text" id="values"  /></div>
             <div class="allElems">
                 <button onclick="addValue('+')">+</button>
                 <button onclick="addValue('-')">-</button>
@@ -43,7 +43,7 @@
         <div class="calculator">
             
             <div><input type="text" id="valued"  /></div>
-            <div class="allElems">
+            <div class="allElemsEngs">
                 <button onclick="addValueEnginering('+')">+</button>
                 <button onclick="addValueEnginering('-')">-</button>
                 <button onclick="addValueEnginering('/')">/</button>
@@ -63,14 +63,14 @@
                 <button onclick="addValueEnginering(2)">2</button>
                 <button onclick="addValueEnginering(1)">1</button>
                 <button onclick="addValueEnginering(0)">0</button>
-                <button onclick="addValueEnginering('log(')">Log</button>
-                <button onclick="addValueEnginering('ln10(')">Ln10</button>
+                <button onclick="addValueEnginering('log(')">log</button>
+                <button onclick="addValueEnginering('Ln10(')">Ln10</button>
                 <button onclick="addValueEnginering('mod(')">mod</button>
                 <button onclick="addValueEnginering('sin(')">sin</button>
                 <button onclick="addValueEnginering('cos(')">cos</button>
                 <button onclick="addValueEnginering('tang(')">tang</button>
                 <button onclick="addValueEnginering('arcsin(')">arcsin</button>
-                <button onclick="addValueEnginering('arccos(')">arccos</button>
+                <button onclick="addValueEnginering('Arccos(')">Arccos</button>
                 <button onclick="addValueEnginering('arctang(')">arctang</button>
                 <button onclick="addValueEnginering(')')">)</button>
          
@@ -149,10 +149,6 @@ let inputs = document.getElementById("values");
 
             currentNumber += allsymbols[i];
         }
-        
-
-
-    
     }
 
     
@@ -177,18 +173,38 @@ let inputs = document.getElementById("values");
 
 const solutionsEnginering = () =>{
 
-
-
 let inputs = document.getElementById("valued");
     let allsymbols = (inputs.value).toString().split('');
     let operators = ['+', '-', '/', '*', "%", '^', '√'];
-    let trygonometry = ['log','ln10','mod','sin','cos', 'tang' ,'arcsin', 'arccos', 'arctang']
+    let trygonometry = ['l','L','m','s','c', 't' ,'a', 'A', 'F']
     let numbers = [];
     let operations = [];
     let currentNumber = '';
 
     for (let i = 0; i < allsymbols.length; i++) {
        
+
+        if(trygonometry.includes(allsymbols[i])){
+            let symb = allsymbols[i];    
+            while(allsymbols[i] !== '(' && i < allsymbols.length ){
+                    i++;
+
+                }
+                i++;
+
+                while(allsymbols[i] !== ')' && i < allsymbols.length){
+                    currentNumber += allsymbols[i]
+
+                    i++;
+                }
+                currentNumber = operationEnginering(symb,currentNumber )
+                numbers.push(Number(currentNumber))
+                currentNumber = ''
+
+            }
+
+
+
         
         if(allsymbols[i] === '√'){
             currentNumber += root(allsymbols[i+1 ])
@@ -197,14 +213,6 @@ let inputs = document.getElementById("valued");
             i++;
             
         }
-        if(trygonometry.includes(allsymbols[i])){
-                i++;
-                while(allsymbols[i] !== ')'){
-                    currentNumber += allsymbols[i]
-
-                }
-                currentNumber = '' //make in switch
-            }
 
 
         if (operators.includes(allsymbols[i])) {
@@ -265,6 +273,20 @@ const clearedEnginering = () =>{
  
 }
 
+
+const operationEnginering = (symbol , a ,b) =>{
+    switch(symbol){
+        case  'l' : return(log(a,b))
+        case  'L' :  return(ln(a,b))
+        case  'm' :   return (modules(a,b))
+        case  's' :   return(sin(a,b))
+        case  'c' :   return(cos(a,b))
+        case  't' :  return(tang(a,b))
+        case  'a' :  return(arcsin(a,b))
+        case  'A' :  return(arccos(a,b))
+         case 'F' : return(arctang(a,b))
+    }
+}
 
 
 
